@@ -5,17 +5,17 @@ import Image from "next/image";
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
-import InputAdornment from "@mui/material/InputAdornment";
-import { Input } from "@mui/material";
+import InputBase from "@mui/material/InputBase";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 
 export const Header = () => {
   return (
     <Container>
-      <Box sx={{ display: "flex" }}>
+      <Box
+        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+      >
         <Image src="/Vector.png" alt="" width={32} height={26} />
         <Box
           sx={{
@@ -43,22 +43,52 @@ export const Header = () => {
               alignItems: "center",
               justifyItems: "center",
               borderRadius: "8px",
+              paddingLeft: 2,
+              gap: 1,
 
               display: "flex",
               border: "solid",
+              borderWidth: "1px",
             }}
           >
             <SearchIcon />
-            <Input placeholder="Хайx" sx={{}} />
+            <InputBase placeholder="Хайx" sx={{}} />
           </Box>
-          <Box sx={{ display: "flex", gap: "20px" }}>
-            <Box sx={{ display: "flex" }}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: "40px",
+              alignItems: "center",
+              justifyContent: "center",
+              button: {
+                fontSize: 22,
+                fontWeight: 700,
+              },
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+                alignItems: "center",
+              }}
+            >
               <ShoppingBasketOutlinedIcon />
-              <Typography>Сагс</Typography>
+              <Typography sx={{ fontSize: "14px", fontWeight: "700" }}>
+                Сагс
+              </Typography>
             </Box>
-            <Box sx={{ display: "flex" }}>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+                alignItems: "center",
+              }}
+            >
               <PermIdentityIcon />
-              <Typography>Нэвтрэх</Typography>
+              <Typography sx={{ fontSize: "14px", fontWeight: "700" }}>
+                Нэвтрэх
+              </Typography>
             </Box>
           </Box>
         </Box>
