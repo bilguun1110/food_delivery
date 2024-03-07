@@ -12,11 +12,23 @@ import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 
 export const Header = () => {
   return (
-    <Container>
+    <Box
+      sx={{
+        marginTop: "10px",
+        display: "flex",
+        justifyContent: "center",
+        width: "100%",
+      }}
+    >
       <Box
-        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+        sx={{
+          display: "flex",
+          width: "1400px",
+
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
       >
-        <Image src="/Vector.png" alt="" width={32} height={26} />
         <Box
           sx={{
             display: "flex",
@@ -25,6 +37,7 @@ export const Header = () => {
             paddingLeft: "24px",
           }}
         >
+          <Image src="/Vector.png" alt="" width={32} height={26} />
           <Typography sx={{ fontSize: "14px", fontWeight: "700" }}>
             НҮҮР
           </Typography>
@@ -93,6 +106,6 @@ export const Header = () => {
           </Box>
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };

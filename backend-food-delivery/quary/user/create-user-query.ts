@@ -6,6 +6,10 @@ export const createUserQuery = async (req: Request) => {
   try {
     const { name, email, phone, password } = req.body;
 
+    if (!name || !email || !phone || !password) {
+      return "dutuu bna";
+    }
+
     const hashedPassword = await passwordHash(password);
 
     const user = await UserModel.create({

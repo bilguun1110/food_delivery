@@ -1,16 +1,91 @@
-import { Container, Box, InputBase, Button, Checkbox } from "@mui/material";
+"use client";
+import {
+  Container,
+  Box,
+  InputBase,
+  Button,
+  Checkbox,
+  InputAdornment,
+  IconButton,
+  Stack,
+} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
+import { ChangeEvent, useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
-export const Signup = async () => {
+const input1 = [
+  { title: " Нэр", name: "name", placeHolder: "Нэрээ оруулна уу" },
+  { title: "И-мэйл", name: "email", placeHolder: "И-мэйл хаягаа оруулна уу" },
+  { title: "Утас", name: "phone", placeHolder: "Утасаа оруулна уу" },
+];
+const input2 = [
+  { title: " Нууц үг", name: "password", placeHolder: "Нууц үгээ оруулна уу" },
+  {
+    title: " Нууц үг давтах",
+    name: "rePassword",
+    placeHolder: "Нууц үгээ оруулна уу",
+  },
+];
+
+type stateType = {
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
+  rePassword: string;
+};
+
+export const Signup = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [createdData, setCreatedData] = useState<stateType>({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    rePassword: "",
+  });
+  const [error, setError] = useState<string>("");
+  const [passwordChecker, setPasswordChecker] = useState("");
+  const router = useRouter();
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setCreatedData({ ...createdData, [name]: value });
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const signUpHandler = async () => {
+    try {
+      if (createdData.password !== createdData.rePassword) {
+        setPasswordChecker("wrong password");
+      }
+      const { data } = await axios.post(
+        "http://localhost:8000/signup",
+        createdData
+      );
+      console.log(data);
+      setError(data.user);
+      router.push(`/login`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <Container sx={{ display: "flex", justifyContent: "center" }}>
+    <Box
+      sx={{ display: "flex", justifyContent: "center", marginBottom: "100px" }}
+    >
       <Box
         sx={{
           width: "448px",
           height: "722px",
           marginTop: "74px",
-
           padding: 4,
         }}
       >
@@ -27,84 +102,61 @@ export const Signup = async () => {
           Бүртгүүлэх
         </Typography>
         <Box>
-          <Typography sx={{ fontSize: "14px", fontWeight: "400" }}>
-            Нэр
-          </Typography>
-          <InputBase
-            sx={{
-              padding: "8px 16px",
-              bgcolor: "#F7F7F8",
-              width: "384px",
-              borderRadius: "4px",
-              borderWidth: "1px",
-              marginBottom: 2,
-            }}
-            placeholder="Нэрээ оруулна уу"
-          />
+          {input1.map(({ title, name, placeHolder }, idx) => (
+            <Box key={idx}>
+              <Typography sx={{ fontSize: "14px", fontWeight: "400" }}>
+                {title}
+              </Typography>
+              <InputBase
+                onChange={handleChange}
+                name={name}
+                sx={{
+                  padding: "8px 16px",
+                  bgcolor: "#F7F7F8",
+                  width: "384px",
+                  borderRadius: "4px",
+                  borderWidth: "1px",
+                  marginBottom: 2,
+                }}
+                placeholder={placeHolder}
+              />
+            </Box>
+          ))}
         </Box>
+
         <Box>
-          <Typography sx={{ fontSize: "14px", fontWeight: "400" }}>
-            И-мэйл
-          </Typography>
-          <InputBase
-            sx={{
-              padding: "8px 16px",
-              bgcolor: "#F7F7F8",
-              width: "384px",
-              borderRadius: "4px",
-              borderWidth: "1px",
-              marginBottom: 2,
-            }}
-            placeholder="И-мэйл хаягаа оруулна уу"
-          />
+          {input2.map(({ title, name, placeHolder }, idx) => (
+            <Box key={idx}>
+              <Typography sx={{ fontSize: "14px", fontWeight: "400" }}>
+                {title}
+              </Typography>
+              <InputBase
+                name={name}
+                sx={{
+                  padding: "8px 16px",
+                  bgcolor: "#F7F7F8",
+                  width: "384px",
+                  borderRadius: "4px",
+                  borderWidth: "1px",
+                  marginBottom: 2,
+                }}
+                onChange={handleChange}
+                id="outlined-adornment-password"
+                placeholder={placeHolder}
+                type={showPassword ? "password" : "text"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleClickShowPassword} edge="end">
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </Box>
+          ))}
         </Box>
-        <Box>
-          <Typography sx={{ fontSize: "14px", fontWeight: "400" }}>
-            Хаяг
-          </Typography>
-          <InputBase
-            sx={{
-              padding: "8px 16px",
-              bgcolor: "#F7F7F8",
-              width: "384px",
-              borderRadius: "4px",
-              borderWidth: "1px",
-              marginBottom: 2,
-            }}
-            placeholder="Та хаягаа оруулна уу"
-          />
-        </Box>
-        <Box>
-          <Typography sx={{ fontSize: "14px", fontWeight: "400" }}>
-            Нууц үг
-          </Typography>
-          <InputBase
-            sx={{
-              padding: "8px 16px",
-              bgcolor: "#F7F7F8",
-              width: "384px",
-              borderRadius: "4px",
-              borderWidth: "1px",
-              marginBottom: 2,
-            }}
-            placeholder="Нууц үгээ оруулна уу"
-          />
-        </Box>
-        <Box>
-          <Typography sx={{ fontSize: "14px", fontWeight: "400" }}>
-            Нууц үг давтах
-          </Typography>
-          <InputBase
-            sx={{
-              padding: "8px 16px",
-              bgcolor: "#F7F7F8",
-              width: "384px",
-              borderRadius: "4px",
-              borderWidth: "1px",
-            }}
-            placeholder="Нууц үгээ оруулна уу"
-          />
-        </Box>
+        <Stack>{error && <Box sx={{ color: "red" }}> {error}</Box>}</Stack>
+
         <Box sx={{ marginTop: "48px" }}>
           <Box
             sx={{
@@ -130,11 +182,12 @@ export const Signup = async () => {
               padding: "8px 16x",
               borderRadius: "4px",
             }}
+            onClick={signUpHandler}
           >
             Бүртгүүлэх
           </Button>
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };

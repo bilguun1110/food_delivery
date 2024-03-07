@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const passwordHash = async (password: string) => {
   const salt = await bcrypt.genSaltSync(1);
@@ -10,4 +11,9 @@ export const passwordHash = async (password: string) => {
 export const compareHash = (password: string, hash: string) => {
   const isTrue = bcrypt.compareSync(password, hash);
   return isTrue;
+};
+
+export const tokenGenerate = async (userId: string) => {
+  const token = await jwt.sign({ userId }, "secret", { expiresIn: "1d" });
+  return token;
 };

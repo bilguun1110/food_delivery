@@ -21,5 +21,7 @@ const UserSchema = new Schema<UserModelType>({
   updatedAt: { type: Date, required: true, default: Date.now },
 });
 
+UserSchema.index({ email: 1 }, { unique: true });
+
 export const UserModel: Model<UserModelType> =
   models["Users"] || model("Users", UserSchema);
