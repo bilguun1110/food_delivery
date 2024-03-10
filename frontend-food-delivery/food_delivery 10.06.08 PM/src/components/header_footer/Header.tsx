@@ -18,6 +18,7 @@ export const Header = () => {
         display: "flex",
         justifyContent: "center",
         width: "100%",
+        height: "57px",
       }}
     >
       <Box

@@ -22,6 +22,7 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const router = useRouter();
   const [error, setError] = useState("");
+  const [bgColor, setBgColor] = useState("gray");
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -40,6 +41,14 @@ export const Login = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const jumpSignUp = async () => {
+    router.push("/signup");
+  };
+
+  const jumpForgotPass = async () => {
+    router.push("/forgot_pass");
   };
 
   return (
@@ -111,6 +120,21 @@ export const Login = () => {
               }
             />
           </Box>
+          <Box sx={{ width: "100%", display: "flex", justifyContent: "end" }}>
+            <Button
+              sx={{
+                fontSize: "12px",
+                fontWeight: "400",
+                color: "black",
+                width: "150px",
+                display: "flex",
+                justifyContent: "end",
+              }}
+              onClick={jumpForgotPass}
+            >
+              Нууц үг сэргээх
+            </Button>
+          </Box>
         </Box>
         <Box>{error && <Box sx={{ color: "red" }}>{error}</Box>}</Box>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
@@ -150,6 +174,7 @@ export const Login = () => {
               borderColor: "green",
             }}
             variant="outlined"
+            onClick={jumpSignUp}
           >
             Бүртгүүлэх
           </Button>

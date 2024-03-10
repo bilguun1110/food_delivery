@@ -40,6 +40,7 @@ type stateType = {
 
 export const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [bgColor, setBgColor] = useState("#EEEFF2");
   const [createdData, setCreatedData] = useState<stateType>({
     name: "",
     email: "",
@@ -71,7 +72,6 @@ export const Signup = () => {
       );
       console.log(data);
       setError(data.user);
-      router.push(`/login`);
     } catch (error) {
       console.log(error);
     }
@@ -167,7 +167,11 @@ export const Signup = () => {
               marginBottom: 4,
             }}
           >
-            <Checkbox />
+            <Checkbox
+              onClick={() => {
+                setBgColor(bgColor ? "green" : "gray");
+              }}
+            />
             <Typography sx={{ fontSize: "14px", fontWeight: "400" }}>
               Үйлчилгээний нөхцөл зөвшөөрөх
             </Typography>
@@ -176,12 +180,13 @@ export const Signup = () => {
             sx={{
               fontSize: "16px",
               fontWeight: "400",
-              bgcolor: "#EEEFF2",
+
               color: "#1C20243D",
               width: "384px",
               padding: "8px 16x",
               borderRadius: "4px",
             }}
+            style={{ backgroundColor: bgColor }}
             onClick={signUpHandler}
           >
             Бүртгүүлэх
