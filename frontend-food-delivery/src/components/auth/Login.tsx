@@ -34,10 +34,17 @@ export const Login = () => {
         email: email,
         password: password,
       });
-      console.log(result);
 
-      localStorage.setItem("token", result.data.user);
-      setError(result.data);
+      if (
+        result.data.user == "user not found" ||
+        result.data.user == "wrong password"
+      ) {
+        setError(result.data.user);
+      } else {
+        console.log(result);
+        router.push("/");
+        localStorage.setItem("token", result.data.user);
+      }
     } catch (error) {
       console.log(error);
     }

@@ -9,6 +9,7 @@ export type UserModelType = {
   isAdmin?: boolean;
   createdAt: Date;
   updatedAt: Date;
+  OTB: string;
 };
 
 const UserSchema = new Schema<UserModelType>({
@@ -19,9 +20,10 @@ const UserSchema = new Schema<UserModelType>({
   isAdmin: { type: Boolean, default: false, required: false },
   createdAt: { type: Date, required: true, default: Date.now },
   updatedAt: { type: Date, required: true, default: Date.now },
+  OTB: { type: String, required: true },
 });
 
-UserSchema.index({ email: 1 }, { unique: true });
+export const isEmailValid = UserSchema.index({ email: 1 }, { unique: true });
 
 export const UserModel: Model<UserModelType> =
   models["Users"] || model("Users", UserSchema);

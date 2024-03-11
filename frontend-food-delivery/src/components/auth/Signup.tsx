@@ -49,7 +49,6 @@ export const Signup = () => {
     rePassword: "",
   });
   const [error, setError] = useState<string>("");
-  const [passwordChecker, setPasswordChecker] = useState("");
   const router = useRouter();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -63,15 +62,25 @@ export const Signup = () => {
 
   const signUpHandler = async () => {
     try {
-      if (createdData.password !== createdData.rePassword) {
-        setPasswordChecker("wrong password");
-      }
-      const { data } = await axios.post(
+      const result = await axios.post(
         "http://localhost:8000/signup",
         createdData
       );
-      console.log(data);
-      setError(data.user);
+
+      if (
+        result.data.user == "Хэрэлэгч бүртгэгдсэн байна" ||
+        result.data.user == "Мэдээлэл дутуу байна"
+      ) {
+        setError(result.data.user);
+      } else {
+        console.log(result);
+        router.push("/login");
+      }
+
+      if (createdData.password === createdData.rePassword) {
+      } else {
+        setError("wrong password");
+      }
     } catch (error) {
       console.log(error);
     }

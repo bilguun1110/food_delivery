@@ -7,7 +7,7 @@ export const createUserQuery = async (req: Request) => {
     const { name, email, phone, password } = req.body;
 
     if (!name || !email || !phone || !password) {
-      return "dutuu bna";
+      return "Мэдээлэл дутуу байна";
     }
 
     const hashedPassword = await passwordHash(password);
@@ -20,6 +20,6 @@ export const createUserQuery = async (req: Request) => {
     });
     return user;
   } catch (error: any) {
-    throw new Error(error.message);
+    return "Хэрэлэгч бүртгэгдсэн байна";
   }
 };
