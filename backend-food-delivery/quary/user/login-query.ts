@@ -1,10 +1,6 @@
-import { UserModel } from "../../db";
 import { Request } from "express";
 import { compareHash, tokenGenerate } from "../../util";
-const getUserByEmail = async (email: string) => {
-  const user = await UserModel.findOne({ email: email });
-  return user;
-};
+import { getUserByEmail } from "../../util";
 
 export const loginQuery = async (req: Request) => {
   const { email, password } = req.body;

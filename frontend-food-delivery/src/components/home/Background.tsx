@@ -2,17 +2,20 @@
 
 import Image from "next/image";
 import React from "react";
-import { Box, Divider, Stack, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 
 export const Background = () => {
   return (
     <Box>
-      <Stack
+      <Box
         sx={{
           backgroundImage: "url('bg.png')",
           width: "100%",
           height: "788px",
-          marginBottom: "100px",
+          marginBottom: "120px",
+          display: "flex",
+          gap: "250px",
+          paddingLeft: "380px",
         }}
       >
         <Box
@@ -49,7 +52,28 @@ export const Background = () => {
             Horem ipsum dolor sit amet, consectetur adipiscing elit.
           </Typography>
         </Box>
-      </Stack>
+        <Box
+          sx={{
+            marginTop: "170px",
+            display: "flex",
+            width: "588px",
+            height: "438px",
+          }}
+        >
+          <Box sx={{ position: "relative" }}>
+            <Image alt="" src="/bg1.png" width={443} height={438} />
+          </Box>
+          <Box
+            sx={{
+              position: "absolute",
+              marginLeft: "275px",
+              marginTop: "113px",
+            }}
+          >
+            <Image alt="" src="/bg2.png" width={313} height={313} />
+          </Box>
+        </Box>
+      </Box>
     </Box>
   );
 };

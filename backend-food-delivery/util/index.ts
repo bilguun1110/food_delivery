@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { UserModel } from "../db";
 
 export const passwordHash = async (password: string) => {
   const salt = await bcrypt.genSaltSync(1);
@@ -16,4 +17,9 @@ export const compareHash = (password: string, hash: string) => {
 export const tokenGenerate = async (userId: string) => {
   const token = await jwt.sign({ userId }, "secret", { expiresIn: "1d" });
   return token;
+};
+
+export const getUserByEmail = async (email: string) => {
+  const user = await UserModel.findOne({ email: email });
+  return user;
 };

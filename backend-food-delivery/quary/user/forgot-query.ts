@@ -1,16 +1,12 @@
 import NodeMailer from "nodemailer";
 import { UserModel } from "../../db";
 import { Request, Response } from "express";
-
-const isEmailValid = async (email: string) => {
-  const result = UserModel.findOne({ email: email });
-  return result;
-};
+import { getUserByEmail } from "../../util";
 
 export const ForgotPasswordQuery = async (req: Request, res: Response) => {
   const { email } = req.body;
 
-  const isUser = await isEmailValid(email);
+  const isUser = await getUserByEmail(email);
 
   if (!isUser) {
     throw new Error("Email not found");

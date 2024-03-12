@@ -55,7 +55,7 @@ export const Login = () => {
   };
 
   const jumpForgotPass = async () => {
-    router.push("/forgot_pass");
+    router.push("/forgot");
   };
 
   return (

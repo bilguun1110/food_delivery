@@ -1,13 +1,23 @@
-import React from "react";
+"use client";
+
+import React, { ChangeEvent } from "react";
 import { Container, Box, Typography, InputBase } from "@mui/material";
-export const Step_1 = () => {
+import axios from "axios";
+import { useState } from "react";
+
+type Email = {
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+};
+export const Step_1 = (props: Email) => {
+  const { setEmail } = props;
+
   return (
     <Container sx={{ display: "flex", justifyContent: "center" }}>
       <Box
         sx={{
           width: "448px",
           height: "fit-content",
-          marginTop: "86px",
+          marginTop: "170px",
           display: "flex",
           flexDirection: "column",
           padding: 4,
@@ -36,6 +46,7 @@ export const Step_1 = () => {
                 marginBottom: 2,
               }}
               placeholder="И-мэйл хаягаа оруулна уу"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </Box>
         </Box>

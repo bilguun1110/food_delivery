@@ -6,7 +6,6 @@ import {
   Box,
   Typography,
   InputBase,
-  Button,
   InputAdornment,
   IconButton,
 } from "@mui/material";
@@ -14,7 +13,12 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import { useState } from "react";
 
-export const Step_2 = () => {
+type OTB = {
+  setOTB: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export const Step_2 = (props: OTB) => {
+  const { setOTB } = props;
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {
@@ -58,6 +62,7 @@ export const Step_2 = () => {
                 borderWidth: "1px",
                 marginBottom: 2,
               }}
+              onChange={(e) => setOTB(e.target.value)}
               type={showPassword ? "password" : "text"}
               placeholder="*********"
               endAdornment={

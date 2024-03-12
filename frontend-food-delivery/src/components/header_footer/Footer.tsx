@@ -42,6 +42,7 @@ export const Footer = () => {
           alignItems: "center",
           flexDirection: "column",
           gap: "40px",
+          marginTop: "140px",
         }}
       >
         <Box sx={{ display: "flex", marginTop: "114px", gap: 1 }}>
