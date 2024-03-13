@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { Step_1 } from "@/components/forgot_pass/Step_1";
 import { Step_2 } from "@/components/forgot_pass/Step_2";
 import { Step_3 } from "@/components/forgot_pass/Step_3";
@@ -9,19 +9,30 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
+type PasswordReset = {
+  otp: string;
+  email: string;
+  password: string;
+  rePassword: string;
+};
+
 const page = () => {
-  const [email, setEmail] = useState("");
+  const [userData, setUserData] = useState<Partial<PasswordReset>>({});
   const [step, setStep] = useState(0);
-  const [OTB, setOTB] = useState("");
   const [error, setError] = useState("");
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setUserData({ ...userData, [name]: value });
+  };
+
   const router = useRouter();
-  console.log(email);
 
   const changeComponent = async () => {
     if (step === 0) {
       try {
         const result = await axios.post("http://localhost:8000/forgot", {
-          email: email,
+          email: userData.email,
         });
         console.log(result);
 
@@ -37,13 +48,25 @@ const page = () => {
       }
     } else if (step === 1) {
       const { data } = await axios.post("http://localhost:8000/checker", {
-        OTB: OTB,
+        email: userData.email,
+        OTB: userData.otp,
       });
       if (data === "Нууц код зөв байна") {
         setError("");
         setStep(step + 1);
       } else {
         setError("Invalid Code");
+      }
+    } else if (step === 2) {
+      const { data } = await axios.post("http://localhost:8000/changer", {
+        email: userData.email,
+        password: userData.password,
+      });
+      if (userData.password !== userData.rePassword) {
+        setError("wrong password");
+      } else {
+        setError("");
+        router.push("/login");
       }
     }
   };
@@ -58,19 +81,21 @@ const page = () => {
       }}
     >
       <Box>
-        {step === 0 && <Step_1 setEmail={setEmail} />},
-        {step === 1 && <Step_2 setOTB={setOTB} />},
+        {step === 0 && <Step_1 handleChange={handleChange} />}
+        {step === 1 && <Step_2 handleChange={handleChange} />}
+        {step === 2 && <Step_3 handleChange={handleChange} />}
         <Button
           sx={{
             fontSize: "16px",
             fontWeight: "400",
-            bgcolor: "#EEEFF2",
-            color: "#1C20243D",
+            backgroundColor: `${!userData.email ? "#EEEFF2" : "primary.main"}`,
+            color: `${!userData.email ? "#EEEFF2" : "primary.contrastText"}`,
             width: "384px",
             padding: "8px 16x",
             borderRadius: "4px",
-            marginLeft: "50px",
+            marginLeft: "55px",
           }}
+          disabled={!userData.email}
           onClick={changeComponent}
         >
           Үргэлжлүүлэх

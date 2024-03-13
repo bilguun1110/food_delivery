@@ -6,7 +6,7 @@ export const newSecretCodeQuery = async (req: Request) => {
   const user = await getUserByEmail(email);
 
   if (!user) {
-    throw new Error("Хэрэлэгч олдсонгүй нууц код");
+    throw new Error("Хэрэлэгч олдсонгүй");
   }
 
   if (user.OTB === OTB) {

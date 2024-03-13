@@ -6,10 +6,10 @@ import axios from "axios";
 import { useState } from "react";
 
 type Email = {
-  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 export const Step_1 = (props: Email) => {
-  const { setEmail } = props;
+  const { handleChange } = props;
 
   return (
     <Container sx={{ display: "flex", justifyContent: "center" }}>
@@ -37,6 +37,7 @@ export const Step_1 = (props: Email) => {
               И-мэйл
             </Typography>
             <InputBase
+              name="email"
               sx={{
                 padding: "8px 16px",
                 bgcolor: "#F7F7F8",
@@ -46,7 +47,7 @@ export const Step_1 = (props: Email) => {
                 marginBottom: 2,
               }}
               placeholder="И-мэйл хаягаа оруулна уу"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleChange}
             />
           </Box>
         </Box>

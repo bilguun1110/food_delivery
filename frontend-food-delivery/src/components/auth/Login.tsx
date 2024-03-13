@@ -22,7 +22,6 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const router = useRouter();
   const [error, setError] = useState("");
-  const [bgColor, setBgColor] = useState("gray");
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -35,11 +34,8 @@ export const Login = () => {
         password: password,
       });
 
-      if (
-        result.data.user == "user not found" ||
-        result.data.user == "wrong password"
-      ) {
-        setError(result.data.user);
+      if (result.data == "user not found" || result.data == "wrong password") {
+        setError(result.data);
       } else {
         console.log(result);
         router.push("/");
@@ -80,7 +76,14 @@ export const Login = () => {
         >
           Нэвтрэх
         </Typography>
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Box>
             <Typography sx={{ fontSize: "14px", fontWeight: "400" }}>
               И-мэйл
@@ -136,6 +139,7 @@ export const Login = () => {
                 width: "150px",
                 display: "flex",
                 justifyContent: "end",
+                marginRight: "23px",
               }}
               onClick={jumpForgotPass}
             >
@@ -143,18 +147,28 @@ export const Login = () => {
             </Button>
           </Box>
         </Box>
-        <Box>{error && <Box sx={{ color: "red" }}>{error}</Box>}</Box>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          {error && <Box sx={{ color: "red" }}>{error}</Box>}
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 4,
+            alignItems: "center",
+          }}
+        >
           <Button
             sx={{
               fontSize: "16px",
               fontWeight: "400",
-              bgcolor: "#EEEFF2",
-              color: "#1C20243D",
+              bgcolor: `${!email || !password ? "#EEEFF2" : "primary.main"}`,
+              color: `${!email || !password ? "#1C2024" : "white"}`,
               width: "384px",
               padding: "8px 16x",
               borderRadius: "4px",
             }}
+            disabled={!email}
             onClick={loginHandler}
           >
             Нэвтрэх

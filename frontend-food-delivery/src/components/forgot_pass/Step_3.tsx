@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { ChangeEvent } from "react";
 import {
   Container,
   Box,
@@ -13,14 +13,20 @@ import {
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import { useState } from "react";
+import { Password } from "@mui/icons-material";
 
-export const Step_3 = () => {
+type Password = {
+  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+};
+
+export const Step_3 = (props: Password) => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const { handleChange } = props;
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
   return (
     <Container sx={{ display: "flex", justifyContent: "center" }}>
       <Box
@@ -47,6 +53,7 @@ export const Step_3 = () => {
               Нууц үг
             </Typography>
             <InputBase
+              name="password"
               sx={{
                 padding: "8px 16px",
                 bgcolor: "#F7F7F8",
@@ -55,6 +62,7 @@ export const Step_3 = () => {
                 borderWidth: "1px",
                 marginBottom: 2,
               }}
+              onChange={handleChange}
               type={showPassword ? "password" : "text"}
               placeholder="*********"
               endAdornment={
@@ -71,6 +79,7 @@ export const Step_3 = () => {
               Нууц үг давтах
             </Typography>
             <InputBase
+              name="rePassword"
               sx={{
                 padding: "8px 16px",
                 bgcolor: "#F7F7F8",
@@ -79,6 +88,7 @@ export const Step_3 = () => {
                 borderWidth: "1px",
                 marginBottom: 2,
               }}
+              onChange={handleChange}
               type={showPassword ? "password" : "text"}
               placeholder="*********"
               endAdornment={

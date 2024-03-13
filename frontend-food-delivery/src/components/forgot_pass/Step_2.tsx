@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { ChangeEvent } from "react";
 import {
   Container,
   Box,
@@ -14,11 +14,11 @@ import Visibility from "@mui/icons-material/Visibility";
 import { useState } from "react";
 
 type OTB = {
-  setOTB: React.Dispatch<React.SetStateAction<string>>;
+  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const Step_2 = (props: OTB) => {
-  const { setOTB } = props;
+  const { handleChange } = props;
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {
@@ -54,6 +54,7 @@ export const Step_2 = (props: OTB) => {
               Нууц үг сэргээх код
             </Typography>
             <InputBase
+              name="otp"
               sx={{
                 padding: "8px 16px",
                 bgcolor: "#F7F7F8",
@@ -62,7 +63,7 @@ export const Step_2 = (props: OTB) => {
                 borderWidth: "1px",
                 marginBottom: 2,
               }}
-              onChange={(e) => setOTB(e.target.value)}
+              onChange={handleChange}
               type={showPassword ? "password" : "text"}
               placeholder="*********"
               endAdornment={

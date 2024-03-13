@@ -3,7 +3,8 @@ import { Inter } from "next/font/google";
 import { CssBaseline } from "@mui/material";
 import { Header } from "@/components/header_footer/Header";
 import { Footer } from "@/components/header_footer/Footer";
-
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "../theme";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -19,10 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <CssBaseline />
-        <Header />
-        {children}
-        <Footer />
+        <ThemeProvider theme={theme}>
+          <Header />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

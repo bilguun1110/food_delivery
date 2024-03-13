@@ -9,6 +9,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import { Login } from "../auth/Login";
+import { Button } from "@mui/material";
 
 export const Header = () => {
   return (
@@ -88,9 +90,13 @@ export const Header = () => {
               }}
             >
               <ShoppingBasketOutlinedIcon />
-              <Typography sx={{ fontSize: "14px", fontWeight: "700" }}>
-                Сагс
-              </Typography>
+              <Button>
+                <Typography
+                  sx={{ fontSize: "14px", fontWeight: "700", color: "black" }}
+                >
+                  Сагс
+                </Typography>
+              </Button>
             </Box>
             <Box
               sx={{
@@ -100,9 +106,13 @@ export const Header = () => {
               }}
             >
               <PermIdentityIcon />
-              <Typography sx={{ fontSize: "14px", fontWeight: "700" }}>
-                Нэвтрэх
-              </Typography>
+              <Button>
+                <Typography
+                  sx={{ fontSize: "14px", fontWeight: "700", color: "black" }}
+                >
+                  Нэвтрэх
+                </Typography>
+              </Button>
             </Box>
           </Box>
         </Box>
