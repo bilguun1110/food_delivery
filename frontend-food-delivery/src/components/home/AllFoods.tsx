@@ -1,43 +1,30 @@
-"use client";
-
-import { Box, Typography, Container } from "@mui/material";
-
+import { Box, Typography, Container, Button } from "@mui/material";
+import axios from "axios";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import Image from "next/image";
 
-const data = [
-  {
-    image: "/sale1.png",
-    percent: "20%",
-    name: "Өглөөний хоол",
-    price1: "14,800₮",
-    price2: "16,800₮",
-  },
-  {
-    image: "/sale2.png",
-    percent: "20%",
-    name: "Зайрмаг",
-    price1: "4,800₮",
-    price2: "6,800₮",
-  },
-  {
-    image: "/sale3.png",
-    percent: "20%",
-    name: "Өглөөний хоол",
-    price1: "24,800₮",
-    price2: "26,800₮",
-  },
-  {
-    image: "/sale4.png",
-    percent: "20%",
-    name: "Breakfast ",
-    price1: "24,800₮",
-    price2: "26,800₮",
-  },
-];
+type FoodType = {
+  _id: string;
+  name: string;
+  image: string;
+  ingredients: string;
+  price: string;
+};
 
-export const Discount = () => {
+const getAllFoods = async () => {
+  try {
+    const { data } = await axios.get<FoodType[]>("http://localhost:8000/foods");
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const AllFoods = async () => {
+  const data = await getAllFoods();
+
   return (
     <Container>
       <Box
@@ -52,7 +39,7 @@ export const Discount = () => {
             sx={{ width: "32px", height: "32px", color: "#18BA51" }}
           />
           <Typography fontSize={22} fontWeight={700}>
-             Хямдралтай
+             Бүх хоол
           </Typography>
         </Box>
         <Box
@@ -63,24 +50,30 @@ export const Discount = () => {
             alignItems: "center",
           }}
         >
-          <Typography fontSize={14} fontWeight={400}>
-            Бүгдийг харах
-          </Typography>
+          <Button>
+            <Typography fontSize={14} fontWeight={400}>
+              Бүгдийг харах
+            </Typography>
+          </Button>
+
           <ArrowForwardIosRoundedIcon sx={{ width: "15px", height: "30px" }} />
         </Box>
       </Box>
 
       <Box
         sx={{
-          display: "flex",
-          gap: 2,
           borderWidth: "0px",
+          width: "100%",
           marginBottom: "120px",
+
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gridGap: "15px",
         }}
       >
-        {data.map(({ image, percent, name, price1, price2 }, idx) => (
+        {data?.map((el, index: number) => (
           <Box
-            key={idx}
+            key={index}
             sx={{
               width: "282px",
               height: "256px",
@@ -100,27 +93,7 @@ export const Discount = () => {
                 justifyContent: "center",
               }}
             >
-              <Image src={image} alt="" width={296} height={186} />
-              <Box
-                sx={{
-                  position: "absolute",
-                  display: "flex",
-                  right: "16px",
-                  top: "16px",
-                  width: "69px",
-                  height: "35px",
-                  bgcolor: "#18BA51",
-                  borderRadius: 4,
-                  padding: "4px 16px",
-                  borderColor: "white",
-                  borderWidth: "1px",
-                  borderStyle: "solid",
-                }}
-              >
-                <Typography fontSize={18} fontWeight={600} color={"white"}>
-                  {percent}
-                </Typography>
-              </Box>
+              <Image src={el.image} alt="" width={296} height={186} />
             </Box>
 
             <Box
@@ -131,14 +104,11 @@ export const Discount = () => {
               }}
             >
               <Typography fontSize={18} fontWeight={600}>
-                {name}
+                {el.name}
               </Typography>
               <Box sx={{ display: "flex", gap: 2 }}>
                 <Typography fontSize={18} color={"#18BA51"} fontWeight={600}>
-                  {price1}
-                </Typography>
-                <Typography fontSize={18} fontWeight={600}>
-                  {price2}
+                  {el.price}
                 </Typography>
               </Box>
             </Box>

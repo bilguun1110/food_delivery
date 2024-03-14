@@ -21,12 +21,12 @@ export const getLoggedInQuery = async (req: Request, res: Response) => {
     }
   });
 
-  const { email } = jwt.decode(token) as JwtPayload;
-  console.log(email);
+  const userId = jwt.decode(token) as JwtPayload;
+  console.log(userId);
 
-  if (!email) {
+  if (!userId) {
     throw new Error("wrong token");
   } else {
-    return email;
+    return userId;
   }
 };
