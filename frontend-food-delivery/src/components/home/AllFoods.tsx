@@ -1,4 +1,6 @@
-import { Box, Typography, Container, Button } from "@mui/material";
+"use client";
+
+import { Box, Typography, Container, Button, Stack } from "@mui/material";
 import axios from "axios";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
@@ -12,19 +14,7 @@ type FoodType = {
   price: string;
 };
 
-const getAllFoods = async () => {
-  try {
-    const { data } = await axios.get<FoodType[]>("http://localhost:8000/foods");
-
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const AllFoods = async () => {
-  const data = await getAllFoods();
-
+export const AllFoods = async ({ data }: { data: FoodType[] }) => {
   return (
     <Container>
       <Box
@@ -73,6 +63,7 @@ export const AllFoods = async () => {
       >
         {data?.map((el, index: number) => (
           <Box
+            onClick={() => console.log(el._id)}
             key={index}
             sx={{
               width: "282px",

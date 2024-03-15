@@ -1,21 +1,44 @@
-import Image from "next/image";
-import { Box } from "@mui/material";
 import { Background } from "@/components/home/Background";
 import { HomeCards } from "@/components/home/HomeCards";
 import { AllFoods } from "@/components/home/AllFoods";
+import axios from "axios";
+import { error } from "console";
 
-export default function Home() {
+type FoodType = {
+  _id: string;
+  name: string;
+  image: string;
+  ingredients: string;
+  price: string;
+};
+
+const getAllFoods = async () => {
+  try {
+    const { data } = await axios.get<FoodType[]>("http://localhost:8000/foods");
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export default async function Home() {
+  const data = await getAllFoods();
+
+  if (!data) {
+    throw new Error("data irsengui aldaa garlaa");
+  }
+
   return (
-    <Box>
-      <Box>
+    <>
+      <>
         <Background />
-      </Box>
-      <Box>
+      </>
+      <>
         <HomeCards />
-      </Box>
-      <Box>
-        <AllFoods />
-      </Box>
-    </Box>
+      </>
+      <>
+        <AllFoods data={data} />
+      </>
+    </>
   );
 }

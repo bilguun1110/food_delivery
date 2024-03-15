@@ -10,7 +10,7 @@ export const Background = () => {
       <Box
         sx={{
           backgroundImage: "url('bg.png')",
-          width: "100%",
+          width: "100wh",
           height: "788px",
           marginBottom: "120px",
           display: "flex",

@@ -2,7 +2,7 @@
 
 import Container from "@mui/material/Container";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import SearchIcon from "@mui/icons-material/Search";
@@ -11,8 +11,15 @@ import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlin
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import { Login } from "../auth/Login";
 import { Button } from "@mui/material";
+import { useRouter, usePathname } from "next/navigation";
 
 export const Header = () => {
+  const [foodName, setFoodNmae] = useState("");
+  console.log(foodName);
+
+  const router = useRouter();
+  const pathname = usePathname();
+
   return (
     <Box
       sx={{
@@ -41,7 +48,16 @@ export const Header = () => {
           }}
         >
           <Image src="/Vector.png" alt="" width={32} height={26} />
-          <Typography sx={{ fontSize: "14px", fontWeight: "700" }}>
+          <Typography
+            onClick={() => router.push("/")}
+            sx={{
+              fontSize: "14px",
+              fontWeight: "700",
+              cursor: "pointer",
+
+              color: `${pathname === "/" ? "green" : "black"}`,
+            }}
+          >
             НҮҮР
           </Typography>
           <Typography sx={{ fontSize: "14px", fontWeight: "700" }}>
@@ -68,7 +84,12 @@ export const Header = () => {
             }}
           >
             <SearchIcon />
-            <InputBase placeholder="Хайx" sx={{}} />
+            <InputBase
+              value={foodName}
+              onChange={(e) => setFoodNmae(e.target.value)}
+              placeholder="Хайx"
+              sx={{}}
+            />
           </Box>
           <Box
             sx={{
@@ -106,7 +127,7 @@ export const Header = () => {
               }}
             >
               <PermIdentityIcon />
-              <Button>
+              <Button onClick={() => router.push("/login")}>
                 <Typography
                   sx={{ fontSize: "14px", fontWeight: "700", color: "black" }}
                 >
