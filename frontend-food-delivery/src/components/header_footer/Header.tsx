@@ -1,6 +1,4 @@
 "use client";
-
-import Container from "@mui/material/Container";
 import Image from "next/image";
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
@@ -9,16 +7,20 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import { Login } from "../auth/Login";
 import { Button } from "@mui/material";
 import { useRouter, usePathname } from "next/navigation";
+import { UserContext } from "@/provider/UserProvider";
+import { useContext } from "react";
 
 export const Header = () => {
   const [foodName, setFoodNmae] = useState("");
-  console.log(foodName);
-
   const router = useRouter();
   const pathname = usePathname();
+  const users = useContext(UserContext);
+
+  const getName = async () => {
+    router.push(`/search/${foodName}`);
+  };
 
   return (
     <Box
@@ -83,7 +85,7 @@ export const Header = () => {
               borderWidth: "1px",
             }}
           >
-            <SearchIcon />
+            <SearchIcon onClick={getName} />
             <InputBase
               value={foodName}
               onChange={(e) => setFoodNmae(e.target.value)}
@@ -127,13 +129,19 @@ export const Header = () => {
               }}
             >
               <PermIdentityIcon />
-              <Button onClick={() => router.push("/login")}>
-                <Typography
-                  sx={{ fontSize: "14px", fontWeight: "700", color: "black" }}
-                >
-                  Нэвтрэх
-                </Typography>
-              </Button>
+              {!users ? (
+                <Button onClick={() => router.push("/login")}>
+                  <Typography
+                    sx={{ fontSize: "14px", fontWeight: "700", color: "black" }}
+                  >
+                    Нэвтрэх
+                  </Typography>
+                </Button>
+              ) : (
+                <Button onClick={() => router.push("/userProfile")}>
+                  <Typography color={"green"}>Хэрэглэгч</Typography>
+                </Button>
+              )}
             </Box>
           </Box>
         </Box>

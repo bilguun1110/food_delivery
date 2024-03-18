@@ -5,6 +5,8 @@ import axios from "axios";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import Image from "next/image";
+import { UserContext } from "@/provider/UserProvider";
+import { useContext } from "react";
 
 type FoodType = {
   _id: string;
@@ -14,7 +16,7 @@ type FoodType = {
   price: string;
 };
 
-export const AllFoods = async ({ data }: { data: FoodType[] }) => {
+export const AllFoods = ({ data }: { data: FoodType[] }) => {
   return (
     <Container>
       <Box

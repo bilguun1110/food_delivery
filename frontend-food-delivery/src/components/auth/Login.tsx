@@ -37,7 +37,6 @@ export const Login = () => {
       if (result.data == "user not found" || result.data == "wrong password") {
         setError(result.data);
       } else {
-        console.log(result);
         router.push("/");
         localStorage.setItem("token", result.data.user);
       }

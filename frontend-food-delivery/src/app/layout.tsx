@@ -5,6 +5,7 @@ import { Header } from "@/components/header_footer/Header";
 import { Footer } from "@/components/header_footer/Footer";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../theme";
+import { UserProvider } from "@/provider/UserProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,11 +21,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider theme={theme}>
-          <Header />
-          {children}
-          <Footer />
-        </ThemeProvider>
+        <UserProvider>
+          <ThemeProvider theme={theme}>
+            <Header />
+            {children}
+            <Footer />
+          </ThemeProvider>
+        </UserProvider>
       </body>
     </html>
   );

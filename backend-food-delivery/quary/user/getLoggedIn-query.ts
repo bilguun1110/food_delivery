@@ -5,7 +5,7 @@ export const getLoggedInQuery = async (req: Request, res: Response) => {
   const header = req.headers.authorization;
 
   if (!header) {
-    res.send("aaa");
+    res.send("not found token");
     return;
   }
   interface JwtPayload {

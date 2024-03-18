@@ -3,8 +3,9 @@ import { HomeCards } from "@/components/home/HomeCards";
 import { AllFoods } from "@/components/home/AllFoods";
 import axios from "axios";
 import { error } from "console";
+import { useRouter, usePathname } from "next/navigation";
 
-type FoodType = {
+export type FoodType = {
   _id: string;
   name: string;
   image: string;
@@ -14,7 +15,9 @@ type FoodType = {
 
 const getAllFoods = async () => {
   try {
-    const { data } = await axios.get<FoodType[]>("http://localhost:8000/foods");
+    const { data } = await axios.post<FoodType[]>(
+      "http://localhost:8000/foods"
+    );
     return data;
   } catch (error) {
     console.log(error);
