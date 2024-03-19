@@ -23,7 +23,7 @@ const UserSchema = new Schema<UserModelType>({
   OTB: { type: String, required: true },
 });
 
-export const isEmailValid = UserSchema.index({ email: 1 }, { unique: true });
-
 export const UserModel: Model<UserModelType> =
   models["Users"] || model("Users", UserSchema);
+export const isEmailValid = UserSchema.index({ email: 1 }, { unique: true });
+export const updateUserById = (_id: string) => UserModel.findByIdAndUpdate(_id);

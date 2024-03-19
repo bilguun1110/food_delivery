@@ -16,7 +16,7 @@ export const Header = () => {
   const [foodName, setFoodNmae] = useState("");
   const router = useRouter();
   const pathname = usePathname();
-  const users = useContext(UserContext);
+  // const users = useContext(UserContext);
 
   const getName = async () => {
     router.push(`/search/${foodName}`);
@@ -62,7 +62,15 @@ export const Header = () => {
           >
             НҮҮР
           </Typography>
-          <Typography sx={{ fontSize: "14px", fontWeight: "700" }}>
+          <Typography
+            onClick={() => router.push("/menu")}
+            sx={{
+              fontSize: "14px",
+              fontWeight: "700",
+              cursor: "pointer",
+              color: `${pathname === "/menu" ? "green" : "black"}`,
+            }}
+          >
             ХООЛНЫ ЦЭС
           </Typography>
           <Typography sx={{ fontSize: "14px", fontWeight: "700" }}>
@@ -129,7 +137,7 @@ export const Header = () => {
               }}
             >
               <PermIdentityIcon />
-              {!users ? (
+              {/* {!users ? (
                 <Button onClick={() => router.push("/login")}>
                   <Typography
                     sx={{ fontSize: "14px", fontWeight: "700", color: "black" }}
@@ -141,7 +149,7 @@ export const Header = () => {
                 <Button onClick={() => router.push("/userProfile")}>
                   <Typography color={"green"}>Хэрэглэгч</Typography>
                 </Button>
-              )}
+              )} */}
             </Box>
           </Box>
         </Box>

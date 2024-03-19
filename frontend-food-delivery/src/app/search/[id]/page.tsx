@@ -22,7 +22,7 @@ const SearchPage = async ({ params }: { params: { id: string } }) => {
       ],
     },
   };
-  const aldaa: any = [];
+
   const getAllFoods = async () => {
     try {
       const { data } = await axios.post<FoodType[]>(
