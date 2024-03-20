@@ -1,12 +1,11 @@
 import { Categories } from "@/components/menu/Categories";
 import axios from "axios";
-import { FoodType } from "../page";
-import { CategoryFoods } from "@/components/menu/CateogryFoods";
 
 export type CategoriesType = {
   name: string;
   foodId: string;
   id: string;
+  _id: string;
 };
 
 const MenuPage = async () => {
@@ -15,6 +14,7 @@ const MenuPage = async () => {
       const { data } = await axios.post<CategoriesType[]>(
         "http://localhost:8000/categories"
       );
+
       return data;
     } catch (error) {
       console.log(error);
@@ -29,7 +29,6 @@ const MenuPage = async () => {
   return (
     <>
       <Categories result={result} />
-      <></>
     </>
   );
 };

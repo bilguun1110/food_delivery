@@ -26,8 +26,7 @@ export const CategoryFoods = (props: Success) => {
         marginTop: "85px",
         display: "grid",
         gridTemplateColumns: "repeat(4, 1fr)",
-        gridGap: "20px",
-        marginRight: "20px",
+        gridGap: "10px",
       }}
     >
       {foods.foodId.map((el, index: number) => (

@@ -9,32 +9,19 @@ import Image from "next/image";
 import { MouseEvent } from "react";
 import { CategoryFoods } from "./CateogryFoods";
 
-const style = {
-  width: "280px",
-  height: "43px",
-  borderRadius: "8px",
-  border: "solid",
-  borderColor: "gray",
-  fontWeight: "500",
-  fontSize: "18px",
-  display: "flex",
-  alignItems: "center",
-  color: "black",
-  justifyContent: "center",
-};
-
 export type DataType = {
   name: string;
   foodId: FoodType[];
   id: string;
+  _id: string;
 };
 
 export const Categories = ({ result }: { result: CategoriesType[] }) => {
-  // const [id, SetId] = useState<string>("");
   const [foods, setFoods] = useState<DataType>({
     name: "",
     foodId: [],
     id: "",
+    _id: "",
   });
 
   const handleClick = async (event: MouseEvent<HTMLButtonElement>) => {
@@ -45,7 +32,6 @@ export const Categories = ({ result }: { result: CategoriesType[] }) => {
         "http://localhost:8000/category",
         { id: categoryId }
       );
-      console.log(data, "data");
 
       setFoods(data);
     } catch (error) {
@@ -53,15 +39,40 @@ export const Categories = ({ result }: { result: CategoriesType[] }) => {
     }
   };
 
-  console.log(foods, "aa");
-
   return (
     <Container>
       <Box sx={{ width: "100%", display: "flex", gap: 3, marginTop: 5 }}>
         {result.map((el, index: number) => (
-          <Button key={index} sx={style} id={el.id} onClick={handleClick}>
-            {el.name}
-          </Button>
+          <Box
+            key={index}
+            sx={{
+              backgroundColor: `${el.id === foods._id ? "green" : "white"}`,
+              borderRadius: "8px",
+              width: "280px",
+              height: "43px",
+            }}
+          >
+            <Button
+              sx={{
+                width: "100%",
+                height: "100%",
+                borderRadius: "8px",
+                border: "solid",
+                borderColor: "gray",
+                fontWeight: "500",
+                fontSize: "18px",
+                display: "flex",
+                alignItems: "center",
+                color: `${el.id === foods._id ? "white" : "black"}`,
+
+                justifyContent: "center",
+              }}
+              id={el.id}
+              onClick={handleClick}
+            >
+              {el.name}
+            </Button>
+          </Box>
         ))}
       </Box>
 

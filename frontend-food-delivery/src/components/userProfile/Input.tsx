@@ -1,5 +1,5 @@
 import React from "react";
-import { Paper, Box, IconButton, Typography } from "@mui/material";
+import { Container, Box, IconButton, Typography } from "@mui/material";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
 import ForwardToInboxOutlinedIcon from "@mui/icons-material/ForwardToInboxOutlined";
@@ -9,7 +9,7 @@ import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 
 export const Input = () => {
   return (
-    <Paper>
+    <Container>
       <Box
         sx={{
           width: "392px",
@@ -18,6 +18,9 @@ export const Input = () => {
           borderRadius: "4px",
           display: "flex",
           gap: 1,
+          padding: "8px 20px ",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <Box
@@ -26,11 +29,14 @@ export const Input = () => {
             height: "48px",
             backgroundColor: "#FFFFFF",
             borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           <PersonOutlineOutlinedIcon />
         </Box>
-        <Box>
+        <Box sx={{ width: "264px", height: "37px" }}>
           <Typography fontWeight={400} fontSize={12} color={"#888A99"}>
             Tanii ner
           </Typography>
@@ -39,9 +45,9 @@ export const Input = () => {
           </Typography>
         </Box>
         <IconButton>
-          <ModeEditOutlinedIcon />
+          <ModeEditOutlinedIcon sx={{ color: "#18BA51" }} />
         </IconButton>
       </Box>
-    </Paper>
+    </Container>
   );
 };

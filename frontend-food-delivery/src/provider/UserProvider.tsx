@@ -4,60 +4,54 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Children, ReactNode, createContext, useEffect, useState } from "react";
 
-export const UserContext = createContext({});
+export type UserContextType = {
+  isUser: Boolean;
+};
+export const UserContext = createContext<UserContextType>(
+  {} as UserContextType
+);
 
 interface Props {
   children?: ReactNode;
 }
 
-type AuthUser = {
-  email: string;
-};
-
-export type UserContextType = {
-  userEmail: any;
-  setUserEmail: any;
-};
-
 export const UserProvider = ({ children, ...Props }: Props) => {
-  const [userEmail, setUserEmail] = useState<AuthUser | null>(null);
+  const [isUser, setIsUser] = useState<Boolean>(false);
+  const [userEmail, setUserEmail] = useState<UserContextType>();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
-  //   if (!token) {
-  //     router.push("/");
-  //     return;
-  //   }
+    const verifyToken = async () => {
+      try {
+        const { data } = await axios.post(
+          "http://localhost:8000/loggedIn",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-type": "application/json",
+            },
+          }
+        );
+        console.log(data, "data token");
 
-  //   const verifyToken = async () => {
-  //     try {
-  //       const { data } = await axios.post(
-  //         "http://localhost:8000/loggedIn",
-  //         {},
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //             "Content-type": "application/json",
-  //           },
-  //         }
-  //       );
-  //       setUserEmail(data);
-  //       console.log(data);
-  //       router.push("/userProfile");
-  //     } catch (error) {
-  //       console.log(error);
-  //       localStorage.removeItem("token");
-  //       router.push("/login");
-  //     }
-  //   };
-  //   verifyToken();
-  // }, []);
+        if (data === "invalid token" && data === "not found token") {
+          setIsUser(false);
+        } else {
+          setIsUser(true);
+          router.push("/");
+        }
+      } catch (error) {
+        console.log(error);
+        setIsUser(false);
+      }
+    };
+    verifyToken();
+  }, []);
 
   return (
-    <UserContext.Provider value={{ userEmail, setUserEmail }}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={{ isUser }}>{children}</UserContext.Provider>
   );
 };

@@ -11,12 +11,13 @@ import { Button } from "@mui/material";
 import { useRouter, usePathname } from "next/navigation";
 import { UserContext } from "@/provider/UserProvider";
 import { useContext } from "react";
+import { UserContextType } from "@/provider/UserProvider";
 
 export const Header = () => {
   const [foodName, setFoodNmae] = useState("");
   const router = useRouter();
   const pathname = usePathname();
-  // const users = useContext(UserContext);
+  const { isUser } = useContext(UserContext);
 
   const getName = async () => {
     router.push(`/search/${foodName}`);
@@ -137,7 +138,11 @@ export const Header = () => {
               }}
             >
               <PermIdentityIcon />
-              {/* {!users ? (
+              {isUser ? (
+                <Button onClick={() => router.push("/userProfile")}>
+                  <Typography color={"green"}>Хэрэглэгч</Typography>
+                </Button>
+              ) : (
                 <Button onClick={() => router.push("/login")}>
                   <Typography
                     sx={{ fontSize: "14px", fontWeight: "700", color: "black" }}
@@ -145,11 +150,7 @@ export const Header = () => {
                     Нэвтрэх
                   </Typography>
                 </Button>
-              ) : (
-                <Button onClick={() => router.push("/userProfile")}>
-                  <Typography color={"green"}>Хэрэглэгч</Typography>
-                </Button>
-              )} */}
+              )}
             </Box>
           </Box>
         </Box>
