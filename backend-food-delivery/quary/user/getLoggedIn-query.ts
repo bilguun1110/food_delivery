@@ -9,23 +9,15 @@ export const getLoggedInQuery = async (req: Request, res: Response) => {
   const header = req.headers.authorization;
   try {
     if (!header) {
-      res.send("not found token");
-      return;
+      throw new Error("not found token");
     }
 
     const token = header.split(" ")[1];
-    const data: any = jwt.decode(token);
 
-    const user = await getUserById(data.userId);
-    console.log(user);
+    const decodedValue = jwt.verify(token, "secret") as { userId: string };
 
-    jwt.verify(token, "secret", (error) => {
-      if (error) {
-        throw new Error("invalid token");
-      } else {
-        console.log("valid token");
-      }
-    });
+    const user = await getUserById(decodedValue?.userId);
+
     return user;
   } catch (error: any) {
     throw new Error(error.message);

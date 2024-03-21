@@ -3,13 +3,14 @@ import { Container, Box, IconButton, Typography } from "@mui/material";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
 import ForwardToInboxOutlinedIcon from "@mui/icons-material/ForwardToInboxOutlined";
-import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
-import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
+
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 
 export const Input = () => {
   return (
-    <Container>
+    <Container
+      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+    >
       <Box
         sx={{
           width: "392px",

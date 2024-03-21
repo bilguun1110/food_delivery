@@ -12,11 +12,13 @@ import {
 } from "@mui/material";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { UserContext } from "@/provider/UserProvider";
 
 export const Login = () => {
+  const { setIsUser } = useContext(UserContext);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,6 +35,8 @@ export const Login = () => {
         email: email,
         password: password,
       });
+
+      setIsUser(true);
 
       if (result.data == "user not found" || result.data == "wrong password") {
         setError(result.data);

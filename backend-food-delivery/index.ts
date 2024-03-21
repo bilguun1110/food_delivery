@@ -6,6 +6,7 @@ import { useRouter } from "./router";
 import { connect, set } from "mongoose";
 import { FoodRouter } from "./router/food";
 import { CategoryRouter } from "./router/category";
+import { orderRouter } from "./router";
 dotenv.config();
 
 const app = express();
@@ -24,6 +25,7 @@ dotenv.config();
 app.use(useRouter);
 app.use(FoodRouter);
 app.use(CategoryRouter);
+app.use(orderRouter);
 
 app.listen(8000, () => {
   console.log("http://localhost:8000");

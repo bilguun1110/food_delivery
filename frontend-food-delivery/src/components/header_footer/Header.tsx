@@ -7,21 +7,26 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import { Button } from "@mui/material";
+import { Button, Modal } from "@mui/material";
 import { useRouter, usePathname } from "next/navigation";
 import { UserContext } from "@/provider/UserProvider";
 import { useContext } from "react";
-import { UserContextType } from "@/provider/UserProvider";
+import { Basket } from "../home/Basket";
 
 export const Header = () => {
   const [foodName, setFoodNmae] = useState("");
   const router = useRouter();
   const pathname = usePathname();
   const { isUser } = useContext(UserContext);
+  const [openBasket, setOpenBasket] = useState(false);
+  const handleOpen = () => setOpenBasket(true);
+  const handleCloseBasket = () => setOpenBasket(false);
 
   const getName = async () => {
     router.push(`/search/${foodName}`);
   };
+
+  console.log(isUser);
 
   return (
     <Box
@@ -122,7 +127,7 @@ export const Header = () => {
               }}
             >
               <ShoppingBasketOutlinedIcon />
-              <Button>
+              <Button onClick={handleOpen}>
                 <Typography
                   sx={{ fontSize: "14px", fontWeight: "700", color: "black" }}
                 >
@@ -154,6 +159,16 @@ export const Header = () => {
             </Box>
           </Box>
         </Box>
+        <Modal
+          sx={{
+            display: "flex",
+
+            justifyContent: "end",
+          }}
+          open={openBasket}
+        >
+          <Basket handleCloseBasket={handleCloseBasket} />
+        </Modal>
       </Box>
     </Box>
   );

@@ -1,22 +1,49 @@
 "use client";
 
-import { Box, Typography, Container, Button, Stack } from "@mui/material";
 import axios from "axios";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import { useContext, useState } from "react";
+import React from "react";
+import { Modals } from "./Modal";
+import { Modal, Box, Typography, Button, Container } from "@mui/material";
 import Image from "next/image";
-import { UserContext } from "@/provider/UserProvider";
-import { useContext } from "react";
+import { MouseEvent } from "react";
 
-type FoodType = {
+export type FoodType = {
   _id: string;
   name: string;
   image: string;
   ingredients: string;
   price: string;
+  id: string;
 };
 
 export const AllFoods = ({ data }: { data: FoodType[] }) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [getFood, setGetFood] = useState<FoodType>({
+    _id: "",
+    name: "",
+    image: "",
+    ingredients: "",
+    price: "",
+    id: "",
+  });
+  console.log(data);
+
+  const getIdHandle = async (event: MouseEvent<HTMLDivElement>) => {
+    const { id: foodId } = event.currentTarget;
+
+    const foundFood = data.find(({ _id }) => _id === foodId);
+
+    if (foundFood) setGetFood(foundFood);
+    handleOpen();
+  };
+
+  console.log(getFood);
+
   return (
     <Container>
       <Box
@@ -65,7 +92,8 @@ export const AllFoods = ({ data }: { data: FoodType[] }) => {
       >
         {data?.map((el, index: number) => (
           <Box
-            onClick={() => console.log(el._id)}
+            onClick={getIdHandle}
+            id={el._id}
             key={index}
             sx={{
               width: "282px",
@@ -74,6 +102,7 @@ export const AllFoods = ({ data }: { data: FoodType[] }) => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
+              cursor: "pointer",
             }}
           >
             <Box
@@ -101,13 +130,19 @@ export const AllFoods = ({ data }: { data: FoodType[] }) => {
               </Typography>
               <Box sx={{ display: "flex", gap: 2 }}>
                 <Typography fontSize={18} color={"#18BA51"} fontWeight={600}>
-                  {el.price}
+                  {el.price}₮
                 </Typography>
               </Box>
             </Box>
           </Box>
         ))}
       </Box>
+      <Modal
+        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+        open={open}
+      >
+        <Modals handleClose={handleClose} getFood={getFood} />
+      </Modal>
     </Container>
   );
 };

@@ -55,7 +55,7 @@ export const Searched = ({ result }: { result: FoodType[] }) => {
             </Typography>
             <Box sx={{ display: "flex", gap: 2 }}>
               <Typography fontSize={18} color={"#18BA51"} fontWeight={600}>
-                {el.price}
+                {el.price}₮
               </Typography>
             </Box>
           </Box>
