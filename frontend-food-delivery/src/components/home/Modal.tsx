@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   Box,
@@ -11,11 +11,15 @@ import {
 import Image from "next/image";
 import CloseIcon from "@mui/icons-material/Close";
 import { FoodType } from "./AllFoods";
+import { json } from "stream/consumers";
 
 interface FuncProps {
   getFood: FoodType;
   handleClose: (values: any) => void;
 }
+type Basket = {
+  foodId: FoodType;
+};
 
 const buttonStyle = {
   width: "45px",
@@ -31,7 +35,19 @@ const buttonStyle = {
 
 export const Modals = (props: FuncProps) => {
   const { handleClose, getFood } = props;
-  console.log(getFood);
+  const [addFood, setAddFood] = useState("");
+
+  const addFoodLocal = () => {
+    let product = [getFood];
+
+    // product.push("number":"number"+1)
+    localStorage.setItem("product", JSON.stringify([product]));
+  };
+
+  const plusFoodLocal = () => {
+    const localItems = JSON.parse(localStorage.getItem("product") || "[]");
+    console.log(localItems);
+  };
 
   return (
     <Box
@@ -118,7 +134,9 @@ export const Modals = (props: FuncProps) => {
             <Typography fontSize={16} fontWeight={500}>
               1
             </Typography>
-            <Typography sx={buttonStyle}>+</Typography>
+            <Typography onClick={plusFoodLocal} sx={buttonStyle}>
+              +
+            </Typography>
           </Box>
           <Box
             sx={{
@@ -133,6 +151,7 @@ export const Modals = (props: FuncProps) => {
               justifyContent: "center",
               borderRadius: "4px",
             }}
+            onClick={addFoodLocal}
           >
             Сагслах
           </Box>
