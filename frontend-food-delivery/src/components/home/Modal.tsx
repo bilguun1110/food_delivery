@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import {
   Modal,
   Box,
@@ -12,10 +12,11 @@ import Image from "next/image";
 import CloseIcon from "@mui/icons-material/Close";
 import { FoodType } from "./AllFoods";
 import { json } from "stream/consumers";
+import { log } from "console";
 
 interface FuncProps {
   getFood: FoodType;
-  handleClose: (values: any) => void;
+  handleClose: any;
 }
 type Basket = {
   foodId: FoodType;
@@ -35,18 +36,43 @@ const buttonStyle = {
 
 export const Modals = (props: FuncProps) => {
   const { handleClose, getFood } = props;
-  const [addFood, setAddFood] = useState("");
-
-  const addFoodLocal = () => {
-    let product = [getFood];
-
-    // product.push("number":"number"+1)
-    localStorage.setItem("product", JSON.stringify([product]));
-  };
+  const [addFood, setAddFood] = useState<FoodType>({
+    _id: "",
+    name: "",
+    image: "",
+    ingredients: "",
+    price: "",
+    id: "",
+  });
+  const [countFood, setCountFood] = useState<string>("");
+  const [quan, setQuant] = useState("");
 
   const plusFoodLocal = () => {
     const localItems = JSON.parse(localStorage.getItem("product") || "[]");
-    console.log(localItems);
+    console.log(localItems, "aa");
+
+    if (localItems.length == 0) {
+      let product = [getFood];
+      localStorage.setItem("product", JSON.stringify(product));
+    } else {
+      setAddFood(getFood);
+      localItems.push(addFood);
+      setCountFood(localItems.length);
+      localStorage.setItem("product", JSON.stringify(localItems));
+    }
+  };
+  const minusFoodLocal = () => {
+    const localItems = JSON.parse(localStorage.getItem("product") || "[]");
+    localItems.splice(1, 1);
+    localStorage.setItem("product", JSON.stringify(localItems));
+    setCountFood(localItems.length);
+  };
+  const addFoodLocal = () => {
+    if (countFood.length === 0) {
+      let product = [getFood];
+      localStorage.setItem("product", JSON.stringify(product));
+    }
+    handleClose();
   };
 
   return (
@@ -130,9 +156,11 @@ export const Modals = (props: FuncProps) => {
               alignItems: "center",
             }}
           >
-            <Typography sx={buttonStyle}>-</Typography>
+            <Typography sx={buttonStyle} onClick={minusFoodLocal}>
+              -
+            </Typography>
             <Typography fontSize={16} fontWeight={500}>
-              1
+              {countFood}
             </Typography>
             <Typography onClick={plusFoodLocal} sx={buttonStyle}>
               +

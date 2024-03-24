@@ -12,6 +12,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { UserContext } from "@/provider/UserProvider";
 import { useContext } from "react";
 import { Basket } from "../home/Basket";
+import { FoodType } from "../home/AllFoods";
 
 export const Header = () => {
   const [foodName, setFoodNmae] = useState("");
@@ -19,8 +20,15 @@ export const Header = () => {
   const pathname = usePathname();
   const { isUser } = useContext(UserContext);
   const [openBasket, setOpenBasket] = useState(false);
+  const [gotFoods, setGotFoods] = useState<FoodType[]>([]);
   const handleOpen = () => setOpenBasket(true);
   const handleCloseBasket = () => setOpenBasket(false);
+
+  const openingBasket = async () => {
+    handleOpen();
+    const localItems = JSON.parse(localStorage.getItem("product") || "[]");
+    setGotFoods(localItems);
+  };
 
   const getName = async () => {
     router.push(`/search/${foodName}`);
@@ -127,7 +135,7 @@ export const Header = () => {
               }}
             >
               <ShoppingBasketOutlinedIcon />
-              <Button onClick={handleOpen}>
+              <Button onClick={openingBasket}>
                 <Typography
                   sx={{ fontSize: "14px", fontWeight: "700", color: "black" }}
                 >
@@ -167,7 +175,7 @@ export const Header = () => {
           }}
           open={openBasket}
         >
-          <Basket handleCloseBasket={handleCloseBasket} />
+          <Basket handleCloseBasket={handleCloseBasket} gotFoods={gotFoods} />
         </Modal>
       </Box>
     </Box>

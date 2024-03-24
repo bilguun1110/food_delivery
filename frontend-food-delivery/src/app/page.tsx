@@ -11,6 +11,7 @@ export type FoodType = {
   image: string;
   ingredients: string;
   price: string;
+  id: string;
 };
 
 const getAllFoods = async () => {

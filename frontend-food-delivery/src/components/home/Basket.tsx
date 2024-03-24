@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import Image from "next/image";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-
+import { FoodType } from "./AllFoods";
 interface FuncProps {
   handleCloseBasket: (values: any) => void;
+  gotFoods: FoodType[];
 }
 
 const buttonStyle = {
@@ -21,11 +22,12 @@ const buttonStyle = {
 };
 
 export const Basket = (props: FuncProps) => {
-  const { handleCloseBasket } = props;
+  const { handleCloseBasket, gotFoods } = props;
+
   return (
     <Box
       sx={{
-        width: "25%",
+        width: "30%",
         height: "100%",
         backgroundColor: "white",
       }}
@@ -48,44 +50,47 @@ export const Basket = (props: FuncProps) => {
           Таны сагс
         </Typography>
       </Box>
-
-      <Box
-        sx={{
-          borderTop: "solid",
-          borderBottom: "solid",
-          borderColor: "#f4f4f4 ",
-          borderWidth: "2px",
-        }}
-      >
-        <Box sx={{ display: "flex", gap: 2, padding: 2 }}>
-          <Image src="/dessert1.png" alt="" width={245} height={150} />
-          <Box>
-            <Typography fontSize={18} fontWeight={600}>
-              Main pizza
-            </Typography>
-            <Typography fontSize={18} fontWeight={600} color={"#18BA51"}>
-              34,800
-            </Typography>
-            <Typography fontSize={16} fontWeight={400} color={"#767676"}>
-              Хулуу, төмс, лууван , сонгино, цөцгийн тос, самрын үр{" "}
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                width: "50%",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Typography sx={buttonStyle}>-</Typography>
-              <Typography fontSize={16} fontWeight={500}>
-                1
+      {gotFoods?.map((el, index: number) => (
+        <Box
+          sx={{
+            borderTop: "solid",
+            borderBottom: "solid",
+            borderColor: "#f4f4f4 ",
+            borderWidth: "2px",
+          }}
+          key={index}
+        >
+          <Box sx={{ display: "flex", gap: 2, padding: 2 }}>
+            <Image src={el.image} alt="" width={245} height={150} />
+            <Box>
+              <Typography fontSize={18} fontWeight={600}>
+                {el.name}
               </Typography>
-              <Typography sx={buttonStyle}>+</Typography>
+              <Typography fontSize={18} fontWeight={600} color={"#18BA51"}>
+                {el.price}
+              </Typography>
+              <Typography fontSize={16} fontWeight={400} color={"#767676"}>
+                {el.ingredients}
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  width: "50%",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Typography sx={buttonStyle}>-</Typography>
+                <Typography fontSize={16} fontWeight={500}>
+                  1
+                </Typography>
+                <Typography sx={buttonStyle}>+</Typography>
+              </Box>
             </Box>
           </Box>
         </Box>
-      </Box>
+      ))}
+
       <Box
         sx={{
           display: "flex",

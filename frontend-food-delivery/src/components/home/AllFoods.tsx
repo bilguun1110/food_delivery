@@ -31,7 +31,6 @@ export const AllFoods = ({ data }: { data: FoodType[] }) => {
     price: "",
     id: "",
   });
-  console.log(data);
 
   const getIdHandle = async (event: MouseEvent<HTMLDivElement>) => {
     const { id: foodId } = event.currentTarget;
@@ -41,8 +40,6 @@ export const AllFoods = ({ data }: { data: FoodType[] }) => {
     if (foundFood) setGetFood(foundFood);
     handleOpen();
   };
-
-  console.log(getFood);
 
   return (
     <Container>
