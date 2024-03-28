@@ -24,6 +24,19 @@ export const Categories = ({ result }: { result: CategoriesType[] }) => {
     _id: "",
   });
 
+  useEffect(() => {
+    async function fetchFood() {
+      const categoryId = result[0].id;
+      const { data } = await axios.post<DataType>(
+        "http://localhost:8000/category",
+        { id: categoryId }
+      );
+      setFoods(data);
+      console.log(data, "data");
+    }
+    fetchFood();
+  }, []);
+
   const handleClick = async (event: MouseEvent<HTMLButtonElement>) => {
     try {
       const { id: categoryId } = event.currentTarget;

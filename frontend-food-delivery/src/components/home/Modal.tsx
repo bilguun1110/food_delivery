@@ -1,18 +1,9 @@
 "use client";
-import React, { use, useState } from "react";
-import {
-  Modal,
-  Box,
-  Typography,
-  Button,
-  IconButton,
-  Stack,
-} from "@mui/material";
+import React, { useState } from "react";
+import { Box, Typography, IconButton } from "@mui/material";
 import Image from "next/image";
 import CloseIcon from "@mui/icons-material/Close";
 import { FoodType } from "./AllFoods";
-import { json } from "stream/consumers";
-import { log } from "console";
 
 interface FuncProps {
   getFood: FoodType;

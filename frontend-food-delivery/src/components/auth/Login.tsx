@@ -35,14 +35,14 @@ export const Login = () => {
         email: email,
         password: password,
       });
-
-      setIsUser(true);
+      console.log(result.data, "aa");
 
       if (result.data == "user not found" || result.data == "wrong password") {
         setError(result.data);
       } else {
         router.push("/");
         localStorage.setItem("token", result.data.user);
+        setIsUser(true);
       }
     } catch (error) {
       console.log(error);

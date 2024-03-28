@@ -1,5 +1,6 @@
 import { Categories } from "@/components/menu/Categories";
 import axios from "axios";
+import { CategoryFoods } from "@/components/menu/CateogryFoods";
 
 export type CategoriesType = {
   name: string;

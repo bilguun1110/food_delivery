@@ -28,36 +28,36 @@ export const UserProvider = ({ children }: Props) => {
   const [userEmail, setUserEmail] = useState<UserContextType>();
   const router = useRouter();
 
-  // const token = typeof window !== "undefined" && localStorage.getItem("token");
-  // if (!token) {
-  //   router.push("/");
-  // }
+  const token = typeof window !== "undefined" && localStorage.getItem("token");
+  if (!token) {
+    router.push("/");
+  }
 
-  // useEffect(() => {
-  //   if (token) {
-  //     const verifyToken = async () => {
-  //       try {
-  //         const { data } = await axios.post(
-  //           "http://localhost:8000/loggedIn",
-  //           {},
-  //           {
-  //             headers: {
-  //               Authorization: `Bearer ${token}`,
-  //               "Content-type": "application/json",
-  //             },
-  //           }
-  //         );
-  //         console.log(data);
-  //         setIsUser(true);
-  //         router.push("/");
-  //       } catch (error) {
-  //         console.log(error);
-  //         setIsUser(false);
-  //       }
-  //     };
-  //     verifyToken();
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (token) {
+      const verifyToken = async () => {
+        try {
+          const { data } = await axios.post(
+            "http://localhost:8000/loggedIn",
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-type": "application/json",
+              },
+            }
+          );
+          console.log(data);
+          setIsUser(true);
+          router.push("/");
+        } catch (error) {
+          console.log(error);
+          setIsUser(false);
+        }
+      };
+      verifyToken();
+    }
+  }, []);
 
   return (
     <UserContext.Provider value={{ isUser, setIsUser }}>
