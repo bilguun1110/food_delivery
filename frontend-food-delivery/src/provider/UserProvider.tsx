@@ -10,10 +10,18 @@ import {
   useEffect,
   useState,
 } from "react";
+export type UserType = {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  OTB: string;
+};
 
 export type UserContextType = {
   isUser: boolean;
   setIsUser: Dispatch<SetStateAction<boolean>>;
+  userData: UserType;
 };
 export const UserContext = createContext<UserContextType>(
   {} as UserContextType
@@ -25,7 +33,13 @@ interface Props {
 
 export const UserProvider = ({ children }: Props) => {
   const [isUser, setIsUser] = useState<boolean>(false);
-  const [userEmail, setUserEmail] = useState<UserContextType>();
+  const [userData, setUserData] = useState<UserType>({
+    _id: "",
+    email: "",
+    name: "",
+    OTB: "",
+    phone: "",
+  });
   const router = useRouter();
 
   const token = typeof window !== "undefined" && localStorage.getItem("token");
@@ -47,7 +61,8 @@ export const UserProvider = ({ children }: Props) => {
               },
             }
           );
-          console.log(data);
+          console.log(data, "data");
+          setUserData(data.user);
           setIsUser(true);
           router.push("/");
         } catch (error) {
@@ -60,7 +75,7 @@ export const UserProvider = ({ children }: Props) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ isUser, setIsUser }}>
+    <UserContext.Provider value={{ isUser, setIsUser, userData }}>
       {children}
     </UserContext.Provider>
   );

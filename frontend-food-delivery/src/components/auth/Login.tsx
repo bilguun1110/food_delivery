@@ -16,6 +16,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { UserContext } from "@/provider/UserProvider";
+import { axiosInstance } from "../utils/axiosInstance";
 
 export const Login = () => {
   const { setIsUser } = useContext(UserContext);
@@ -31,7 +32,7 @@ export const Login = () => {
 
   const loginHandler = async () => {
     try {
-      const result = await axios.post("http://localhost:8000/login", {
+      const result = await axiosInstance.post("/login", {
         email: email,
         password: password,
       });

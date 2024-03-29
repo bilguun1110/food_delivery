@@ -2,7 +2,7 @@
 import React, { useState, useContext } from "react";
 import { Container, Box, Typography, IconButton, Button } from "@mui/material";
 import { Photo } from "./Photo";
-import { Input } from "./Input";
+import { Inputs } from "./Input";
 import { Input2 } from "./Input2";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import { useRouter } from "next/navigation";
@@ -49,9 +49,8 @@ export const UserProfile = () => {
           gap: 2,
         }}
       >
-        <Input />
-        <Input />
-        <Input />
+        <Inputs />
+
         <Input2 />
         <Container
           sx={{
@@ -156,7 +155,7 @@ export const UserProfile = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "gray",
+                color: "gray-500",
                 borderBottomLeftRadius: "20px",
                 bgcolor: "#8AFF8A",
                 cursor: "pointer",
